@@ -1,0 +1,203 @@
+# Translation of plasma Freyry in LANGUAGE
+# Copyright (C) 2025
+# This file is distributed under the same license as the plasma flex hub package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Freyry Weather\n"
+"Report-Msgid-Bugs-To: https://github.com/zayronxio/Freyry.Weather/\n"
+"POT-Creation-Date: 2025-12-08 00:00-0000\n"
+"PO-Revision-Date: 2025\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+```
+#: ../contents/ui/js/utilities.js
+msgid "Clear"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Mainly clear"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Partly cloudy"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Overcast"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Drizzle light intensity"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Drizzle moderate intensity"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Drizzle dense intensity"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Freezing Drizzle light intensity"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Freezing Drizzle dense intensity"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Rain slight intensity"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Rain moderate intensity"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Rain heavy intensity"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Freezing Rain light intensity"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Freezing Rain heavy intensity"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Snowfall slight intensity"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Snowfall moderate intensity"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Snowfall heavy intensity"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Snow grains"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Rain showers slight"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Rain showers moderate"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Rain showers violent"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Snow showers slight"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Snow showers heavy"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Thunderstorm"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Thunderstorm with slight hail"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Cloudy"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Drizzle"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Rain"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Snow"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Hail"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Showers"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Storm"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Low"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Moderate"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "High"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Very High"
+msgstr ""
+
+#: ../contents/ui/js/utilities.js
+msgid "Extreme"
+msgstr ""
+
+#: ../contents/ui/MainView.qml
+msgid "Feels like"
+msgstr ""
+
+#: ../contents/ui/MainView.qml
+msgid "Wind"
+msgstr ""
+
+#: ../contents/ui/MainView.qml
+msgid "UV"
+msgstr ""
+
+#: ../contents/ui/MainView.qml
+msgid "Rain"
+msgstr ""
+
+#: ../contents/ui/MainView.qml
+msgid "Humidity"
+msgstr ""
+
+#: ../contents/ui/MainView.qml
+msgid "Sunrise"
+msgstr ""
+
+#: ../contents/ui/MainView.qml
+msgid "Sunset"
+msgstr ""
+
+#: ../contents/ui/MainView.qml
+msgid "Max/Min"
+msgstr ""
+
+#: ../contents/ui/MainView.qml
+msgid "Cloud Cover"
+msgstr "

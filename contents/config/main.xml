@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+  <kcfgfile name=""/>
+
+  <group name="General">
+    <entry name="sizeFontPanel" type="int">
+      <default>11</default>
+    </entry>
+    <entry name="UseFormat12hours" type="Bool">
+      <default>true</default>
+    </entry>
+    <entry name="onlyIcon" type="bool">
+      <default>false</default>
+    </entry>
+    <entry name="showTemperatureWeather" type="bool">
+      <default>true</default>
+    </entry>
+    <entry name="showConditionsWeather" type="bool">
+      <default>true</default>
+    </entry>
+    <entry name="fontBoldWeather" type="Bool">
+    <default>true</default>
+    </entry>
+  </group>
+
+  <group name="Weather">
+    <entry name="windUnit" type="string">
+      <default>"km/h"</default>
+    </entry>
+    <entry name="temperatureUnit" type="string">
+      <default>"Celsius"</default>
+    </entry>
+    <entry name="ipLocation" type="bool">
+      <default>true</default>
+    </entry>
+    <entry name="latitudeLocalized" type="int">
+      <default>0</default>
+    </entry>
+    <entry name="longitudeLocalized" type="int">
+      <default>0</default>
+    </entry>
+  </group>
+
+</kcfg>
