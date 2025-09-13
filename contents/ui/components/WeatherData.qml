@@ -30,12 +30,14 @@ Item {
 
   property int currenWeatherCode
   property string currentIconWeather
-  property int currenWeather
-  property int currenHumidity
+  property int currentWeather
+  property int currentHumidity
+  property int cloudCover
   property int apparentTemperature
   property int windSpeed
   property string currentUvIndexText
   property string currentTextWeather
+  property string currentShortTextWeather
 
   property var hourlyTimes: []
   property var hourlyWeather: []
@@ -58,7 +60,7 @@ Item {
   //readonly property string prefixIcon: determinateDay.isday ? "" : "-night"
 
   Component.onCompleted: {
-    //starComponent()
+    starComponent()
   }
 
   function retry(a) {
@@ -140,11 +142,14 @@ Item {
         //indexTime = 0
 
         currenWeatherCode = result.current.weather_code
-        currenHumidity = result.current.relative_humidity_2m
-        currenWeather = result.current.temperature_2m
+        currentHumidity = result.current.relative_humidity_2m
+        currentWeather = result.current.temperature_2m
+        cloudCover = result.current.cloud_cover
         apparentTemperature = result.current.apparent_temperature
         windSpeed = result.current.wind_speed_10m
         currentTextWeather = Utils.textWeather(currenWeatherCode)
+        currentShortTextWeather = Utils.shortTextWeather(currenWeatherCode)
+
         for (var a = 0; a < result.hourly.time.length; a++) {
 
           hourlyTimes.push(result.hourly.time[a]);

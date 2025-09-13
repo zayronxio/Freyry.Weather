@@ -18,30 +18,16 @@ import org.kde.plasma.plasma5support as Plasma5Support
 PlasmoidItem {
     id: root
 
-    property var days: []
-
-    property var valuesMainView: []
     Components.WeatherData {
         id: weatherData
-
-        onDataChanged: {
-            console.log("efcotss")
-            valuesMainView = []
-
-            valuesMainView.push(apparentTemperature);
-            valuesMainView.push(windSpeed);
-            valuesMainView.push(currentUvIndexText);
-            valuesMainView.push(dailyPrecipitationProbabilityMax[0]);
-            console.log(valuesMainView)
-        }
     }
 
     Plasmoid.backgroundHints: PlasmaCore.Types.NoBackground | PlasmaCore.Types.ConfigurableBackground
     preferredRepresentation: compactRepresentation
 
-    property bool boldfonts: plasmoid.configuration.boldfonts
-    property string temperatureUnit: plasmoid.configuration.temperatureUnit
-    property string sizeFontConfg: plasmoid.configuration.sizeFontConfig
+    property bool boldfonts: Plasmoid.configuration.fontBoldWeather
+    property string temperatureUnit: Plasmoid.configuration.temperatureUnit
+    property string sizeFontConfg: Plasmoid.configuration.sizeFontPanel
 
     DayOfWeekRow {
         id: daysWeek

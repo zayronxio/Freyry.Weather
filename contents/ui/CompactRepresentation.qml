@@ -1,153 +1,150 @@
 import QtQuick
-import QtQuick.Layouts 1.1
+import QtQuick.Layouts
 import QtQuick.Controls
 import org.kde.plasma.plasmoid
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.core as PlasmaCore
-import org.kde.plasma.components 3.0 as PlasmaComponents3
-//import org.kde.plasma.plasma5support as Plasma5Support
-
 
 Item {
-    id: iconAndTem
+    id: weatherWidget
 
-    Layout.minimumWidth: widthReal
-    Layout.minimumHeight: heightReal
+    Layout.minimumWidth: widgetWidth
+    Layout.minimumHeight: widgetHeight
 
-    readonly property bool isVertical: Plasmoid.formFactor === PlasmaCore.Types.Vertical
-    property string undefanchors: activeweathershottext ? undefined : parent.verticalCenter
-    property bool textweather: Plasmoid.configuration.displayWeatherInPanel
-    property bool activeweathershottext: heightH > 34
-    property int fonssizes: Plasmoid.configuration.sizeFontConfig
-    property int heightH: wrapper.height
-    property var widthWidget: activeweathershottext ? temOfCo.implicitWidth : temOfCo.implicitWidth + wrapper_weathertext.width
-    property var widthReal: isVertical ? wrapper.width : initial.implicitWidth
-    property var hVerti: wrapper_vertical.implicitHeight
-    property var heightReal: isVertical ? hVerti : wrapper.height
-
+    readonly property bool isVerticalLayout: Plasmoid.formFactor === PlasmaCore.Types.Vertical
+    property bool showShortWeatherText: weatherData.currentShortTextWeather
+    property bool shortWeatherTextActive: actualHeight > 34
+    property int fontSize: Plasmoid.configuration.sizeFontPanel
+    property int actualHeight: parent.height
+    property int widgetWidth: shortWeatherTextActive ? mainTemperature.implicitWidth : mainTemperature.implicitWidth + shortWeatherLabel.width
+    property int widgetHeight: isVerticalLayout ? verticalWrapper.implicitHeight : parent.height
 
     MouseArea {
-        id: compactMouseArea
+        id: toggleMouseArea
         anchors.fill: parent
-
         hoverEnabled: true
-
         onClicked: root.expanded = !root.expanded
     }
+
+    // Horizontal Layout (default)
     RowLayout {
-        id: initial
-        width: icon.width + columntemandweathertext.width + icon.width * 0.3
+        id: horizontalLayout
+        width: weatherIcon.width + temperatureColumn.width + weatherIcon.width * 0.3
         height: parent.height
-        spacing: icon.width / 5
-        visible: !isVertical
+        spacing: weatherIcon.width / 5
+        visible: !isVerticalLayout
+
         Kirigami.Icon {
-            id: icon
-            width: root.height < 17 ? 16 : root.height < 24 ? 22 : 24
+            id: weatherIcon
+            width: actualHeight < 17 ? 16 : actualHeight < 24 ? 22 : 24
             height: width
-            source: wrapper.currentIcon
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
+            source: weatherData.currentIconWeather
             roundToIconSize: false
         }
+
         Column {
-            id: columntemandweathertext
-            width: widthWidget
-            height: temOfCo.implicitHeight
+            id: temperatureColumn
+            width: widgetWidth
+            height: mainTemperature.implicitHeight
             anchors.verticalCenter: parent.verticalCenter
+
             Row {
-                id: temOfCo
-                width: textGrados.implicitWidth + subtextGrados.implicitWidth
-                height: textGrados.implicitHeight
-                anchors.verticalCenter: undefanchors
+                id: mainTemperatureRow
+                width: temperatureLabel.implicitWidth + unitLabel.implicitWidth
+                height: temperatureLabel.implicitHeight
+                anchors.verticalCenter: shortWeatherTextActive ? undefined : parent.verticalCenter
 
                 Label {
-                    id: textGrados
+                    id: temperatureLabel
                     height: parent.height
-                    width: parent.width - subtextGrados.implicitWidth
-                    text: wrapper.currentTemp
-                    font.bold: boldfonts
-                    font.pixelSize: fonssizes
+                    width: parent.width - unitLabel.implicitWidth
+                    text: weatherData.currentWeather
+                    font.bold: true
+                    font.pixelSize: fontSize
                     color: PlasmaCore.Theme.textColor
                     horizontalAlignment: Text.AlignLeft
                     verticalAlignment: Text.AlignVCenter
                 }
+
                 Label {
-                    id: subtextGrados
+                    id: unitLabel
                     height: parent.height
-                    width: parent.width - textGrados.implicitWidth
-                    text: (wrapper.unitsTemperature === "0") ? " °C " : " °F "
-                    horizontalAlignment: Text.AlignLeft
-                    font.bold: boldfonts
-                    font.pixelSize: fonssizes
+                    width: parent.width - temperatureLabel.implicitWidth
+                    text: (weatherWidget.temperatureUnit === "Celsius") ? " °C " : " °F "
+                    font.bold: true
+                    font.pixelSize: fontSize
                     color: PlasmaCore.Theme.textColor
+                    horizontalAlignment: Text.AlignLeft
                     verticalAlignment: Text.AlignVCenter
                 }
             }
+
             Item {
-                id: wrapper_weathertext
-                height: shortweathertext.implicitHeight
-                width: shortweathertext.implicitWidth
-                visible: activeweathershottext & textweather
+                id: shortWeatherLabelWrapper
+                height: shortWeatherLabel.implicitHeight
+                width: shortWeatherLabel.implicitWidth
+                visible: shortWeatherTextActive && showShortWeatherText
+
                 Label {
-                    id: shortweathertext
-                    text: wrapper.weather
-                    font.pixelSize: fonssizes
+                    id: shortWeatherLabel
+                    text: weatherData.currentShortTextWeather
+                    font.pixelSize: fontSize
                     font.bold: true
                     verticalAlignment: Text.AlignVCenter
                 }
             }
         }
     }
+
+    // Vertical Layout (for panels)
     ColumnLayout {
-        id: wrapper_vertical
-        width: root.width
-        height: icon_vertical.height +  textGrados_vertical.implicitHeight
+        id: verticalWrapper
+        width: parent.width
+        height: weatherIconVertical.height + temperatureVertical.implicitHeight
         spacing: 2
-        visible: isVertical
+        visible: isVerticalLayout
+
         Kirigami.Icon {
-            id: icon_vertical
-            width: wrapper.width < 17 ? 16 : wrapper.width < 24 ? 22 : 24
-            height: wrapper.width < 17 ? 16 : wrapper.width < 24 ? 22 : 24
-            source: wrapper.currentIcon
+            id: weatherIconVertical
+            width: parent.width < 17 ? 16 : parent.width < 24 ? 22 : 24
+            height: width
+            source: weatherData.currentIconWeather
             anchors.left: parent.left
             anchors.right: parent.right
             roundToIconSize: false
         }
+
         Row {
-            id: temOfCo_vertical
-            width: textGrados_vertical.implicitWidth + subtextGrados_vertical.implicitWidth
-            height: textGrados_vertical.implicitHeight
+            id: verticalTemperatureRow
+            width: temperatureVertical.implicitWidth + unitVertical.implicitWidth
+            height: temperatureVertical.implicitHeight
             Layout.alignment: Qt.AlignHCenter
 
             Label {
-                id: textGrados_vertical
+                id: temperatureVertical
                 height: parent.height
-                text: wrapper.currentTemp
-                font.bold: boldfonts
-                font.pixelSize: fonssizes
+                text: weatherData.currentTemperature
+                font.bold: true
+                font.pixelSize: fontSize
                 color: PlasmaCore.Theme.textColor
                 horizontalAlignment: Text.AlignHCenter
             }
+
             Label {
-                id: subtextGrados_vertical
+                id: unitVertical
                 height: parent.height
-                text: (wrapper.unitsTemperature === "0") ? " °C" : " °F"
-                font.bold: boldfonts
-                font.pixelSize: fonssizes
+                text: (weatherWidget.temperatureUnit === "Celsius") ? " °C" : " °F"
+                font.bold: true
+                font.pixelSize: fontSize
                 color: PlasmaCore.Theme.textColor
                 horizontalAlignment: Text.AlignHCenter
             }
         }
     }
 
-    /*/Component.onCompleted: {
-        dashWindow = Qt.createQmlObject("Representation {}", wrapper);
-        plasmoid.activated.connect(function() {
-            dashWindow.plasmoidWidV = widthReal
-            dashWindow.plasmoidWidH = heightReal
-            dashWindow.visible = !dashWindow.visible;
-        });
-
-    }/*/
-
+    Component.onCompleted: {
+        width = horizontalLayout.width
+    }
 }
+
+

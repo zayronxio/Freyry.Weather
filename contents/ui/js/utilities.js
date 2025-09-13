@@ -94,7 +94,7 @@ function shortTextWeather(x) {
         96: "Storm",
         99: "Storm"
     };
-    return text[x]
+    return i18n(text[x])
 }
 
 function uvIndexLevelAssignment(nivel) {

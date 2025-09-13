@@ -1,10 +1,12 @@
 import QtQuick
 import QtQuick.Controls
+import org.kde.plasma.plasmoid
 import org.kde.kirigami as Kirigami
 
 Item {
     id: root
 
+    signal metricsUpdated
 
     QtObject {
         id: units
@@ -20,8 +22,8 @@ Item {
     FindCity {
         id: findCity
         onReady: {
-            coordinates.longitud = findCity.selectedLatitude
-            coordinates.longitud = findCity.selectedLongitude
+            coordinates.latitude = findCity.selectedLatitude
+            coordinates.longitude = findCity.selectedLongitude
         }
     }
 
@@ -32,57 +34,95 @@ Item {
     property alias cfg_temperatureUnit: units.temperatureUnit
     property alias cfg_ipLocation: ipLocation.checked
     property alias cfg_longitudeLocalized: coordinates.longitude
-    property alias cfg_latitudeLocalized: coordinates.longitude
+    property alias cfg_latitudeLocalized: coordinates.latitude
+    property alias cfg_selectedMetrics: metricsLayout.selectedMetricNames
 
-    property var allMetrics: [
-        { name: "Wind Speed", selected: false },
-        { name: "Feels Like", selected: false },
-        { name: "UV Index", selected: false },
-        { name: "Humidity", selected: false },
-        { name: "Pressure", selected: false },
-        { name: "Rain", selected: false },
-        { name: "Sunrise", selected: false },
-        { name: "Sunset", selected: false }
-    ]
+    QtObject {
+        id: metricsLayout
+
+        // modelo observable
+        property alias allMetrics: allMetrics
+        property int currentSelected: 0
+        property int maxSelected: 6
+
+        // esta lista se rellena con los nombres de seleccionados
+        property var selectedMetricNames: []
+
+        // inicializar desde cfg_selectedMetrics
+        Component.onCompleted: {
+            for (var i = 0; i < allMetrics.count; i++) {
+                if (metricsLayout.selectedMetricNames.indexOf(allMetrics.get(i).name) !== -1) {
+                    allMetrics.setProperty(i, "selected", true)
+                    currentSelected++
+                }
+            }
+        }
+    }
+
+    // Modelo reactivo
+    ListModel {
+        id: allMetrics
+        ListElement { name: "Wind Speed"; selected: false }
+        ListElement { name: "Feels Like"; selected: false }
+        ListElement { name: "UV Level"; selected: false }
+        ListElement { name: "Humidity"; selected: false }
+        ListElement { name: "Rain"; selected: false }
+        ListElement { name: "Max/Min"; selected: false }
+        ListElement { name: "Sunrise / Sunset"; selected: false }
+        ListElement { name: "Cloud Cover"; selected: false }
+    }
+
+    onMetricsUpdated: {
+        metricsLayout.selectedMetricNames = []
+        for (var i = 0; i < allMetrics.count; i++) {
+            if (allMetrics.get(i).selected) {
+                metricsLayout.selectedMetricNames.push(allMetrics.get(i).name)
+            }
+        }
+        console.log("Selected metrics:", metricsLayout.selectedMetricNames)
+    }
 
     Kirigami.FormLayout {
         width: root.width
+
         CheckBox {
             id: ipLocation
             Kirigami.FormData.label: i18n("Use Location of your ip")
         }
-        Item {
-            Kirigami.FormData.isSection: true
-        }
+
+        Item { Kirigami.FormData.isSection: true }
+
         Button {
             text: i18n("Search Coordinates")
-            onClicked: {
-                findCity.open()
-            }
+            enabled: !ipLocation.checked
+            onClicked: findCity.open()
         }
+
         TextField {
             Kirigami.FormData.label: i18n("Latitude")
-            text: findCity.selectedLatitude === 0 ? "unknown" : findCity.selectedLatitude
-            enabled: false
-            visible: !ipLocation.checked
-        }
-        TextField {
-            Kirigami.FormData.label: i18n("Longitude")
-            text: findCity.selectedLongitude === 0 ? "unknown" : findCity.selectedLongitude
+            text: findCity.selectedLatitude === undefined ? "unknown" : findCity.selectedLatitude
             enabled: false
             visible: !ipLocation.checked
         }
 
-        Item {
-            Kirigami.FormData.isSection: true
+        TextField {
+            Kirigami.FormData.label: i18n("Longitude")
+            text: findCity.selectedLongitude === undefined ? "unknown" : findCity.selectedLongitude
+            enabled: false
+            visible: !ipLocation.checked
         }
+
+        Item { Kirigami.FormData.isSection: true }
+
         ComboBox {
             id: windUnitBox
             Kirigami.FormData.label: i18n("Wind Unit:")
             model: windUnits
-
             onActivated: units.wind = currentValue
-            Component.onCompleted: currentIndex = indexOf(units.wind)
+            Component.onCompleted: {
+                var idx = windUnits.indexOf(units.wind)
+                currentIndex = idx >= 0 ? idx : 0
+            }
         }
 
         ComboBox {
@@ -90,41 +130,42 @@ Item {
             Kirigami.FormData.label: i18n("Temperature Unit:")
             model: temperatureUnits
             onActivated: units.temperatureUnit = currentValue
-            Component.onCompleted: currentIndex = indexOf(units.temperatureUnit)
+            Component.onCompleted: {
+                var idx = temperatureUnits.indexOf(units.temperatureUnit)
+                currentIndex = idx >= 0 ? idx : 0
+            }
         }
-        Item {
-            Kirigami.FormData.isSection: true
-        }
-        Item {
-            Kirigami.FormData.isSection: true
-        }
+
+        Item { Kirigami.FormData.isSection: true }
+        Item { Kirigami.FormData.isSection: true }
+
         Kirigami.Heading {
             width: parent.width
             font.weight: Font.DemiBold
-            text:i18n("Weather Metrics")
+            text: i18n("Weather Metrics")
             anchors.horizontalCenter: parent.horizontalCenter
             color: Kirigami.Theme.textColor
             level: 4
         }
+
         Repeater {
-            model: metricsLayout.allMetrics
+            model: allMetrics
             CheckBox {
-                text: modelData.name
-                checked: modelData.selected
-                Kirigami.FormData.label: i18n(allMetrics.name)
+                checked: model.selected
+                Kirigami.FormData.label: i18n(model.name)
                 onClicked: {
                     if (checked) {
                         if (metricsLayout.currentSelected < metricsLayout.maxSelected) {
                             metricsLayout.currentSelected++
-                            modelData.selected = true
+                            allMetrics.setProperty(index, "selected", true)
                         } else {
-                            // Limitar selección a 6
                             checked = false
                         }
                     } else {
                         metricsLayout.currentSelected--
-                        modelData.selected = false
+                        allMetrics.setProperty(index, "selected", false)
                     }
+                    metricsUpdated()
                 }
             }
         }

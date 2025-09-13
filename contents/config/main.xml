@@ -42,6 +42,9 @@
     <entry name="longitudeLocalized" type="int">
       <default>0</default>
     </entry>
+    <entry name="selectedMetrics" type="StringList">
+      <default>Feels Like,UV Level,Max/Min,Rain,Wind Speed,Sunrise / Sunset</default>
+    </entry>
   </group>
 
 </kcfg>

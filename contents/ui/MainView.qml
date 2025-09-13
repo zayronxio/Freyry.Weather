@@ -6,33 +6,39 @@ Item {
 
     property int generalMargin: 4
 
-    property var titles: ["Feels like", "Max/Min", "Wind", "UV", "Rain", "Sunrise"]
+    property var titles
     property string formattTime: ""
     property var valuesMainView: []
 
+    property var listMetrics: [
+    { name: "Feels Like", value: weatherData.apparentTemperature},
+    { name: "UV Level", value: weatherData.currentUvIndexText },
+    { name: "Humidity", value: weatherData.currentWeather },
+    { name: "Max/Min", value: weatherData.dailyWeatherMax[0] + `|` + weatherData.dailyWeatherMin[0] },
+    { name: "Rain", value: weatherData.dailyWeatherMax[0] },
+    { name: "Wind Speed", value: weatherData.windSpeed },
+    { name: "Sunrise / Sunset", value: sunriseOrSunset() },
+    { name: "Cloud Cover", value: weatherData.cloudCover}
+    ]
+
     function updateValues() {
-        var newValues = []
-
-        if (weatherData.hourlyIsDay === 1) {
-            titles[5] = "Sunrise"
-            newValues.push(Qt.formatDateTime(weatherData.hourlyTimes[weatherData.hourlyIsDay.indexOf(0)], "h ap"))
-        } else {
-            titles[5] = "Sunset"
-            newValues.push(Qt.formatDateTime(weatherData.hourlyTimes[weatherData.hourlyIsDay.indexOf(1)], "h ap"))
+        var newValues = [];
+        for (var i = 0; i < titles.length; i++) {
+            for (var o = 0; o < listMetrics.length; o++){
+                if (titles[i] === listMetrics[o].name) {
+                    newValues.push(listMetrics[o].value);
+                }
+            }
         }
+        valuesMainView = newValues; // Reasignación dispara el binding
+    }
 
-        // valores principales
-        newValues = [
-            weatherData.apparentTemperature,
-            weatherData.dailyWeatherMax[0] + ` | ` + weatherData.dailyWeatherMin[0],
-            //weatherData.currentHumidity,
-            weatherData.windSpeed,
-            weatherData.currentUvIndexText,
-            weatherData.dailyPrecipitationProbabilityMax[0],
-            newValues[0] // Sunrise o Sunset
-        ]
-
-        valuesMainView = newValues
+    function sunriseOrSunset() {
+        if (weatherData.hourlyIsDay[0] === 1) {
+            return Qt.formatDateTime(weatherData.hourlyTimes[weatherData.hourlyIsDay.indexOf(0)], "h ap");
+        } else {
+            return Qt.formatDateTime(weatherData.hourlyTimes[weatherData.hourlyIsDay.indexOf(1)], "h ap");
+        }
     }
 
     Connections {
@@ -43,6 +49,7 @@ Item {
     }
 
     Component.onCompleted: {
+        titles = [].concat(Plasmoid.configuration.selectedMetrics)
         if (weatherData.updateWeather) {
             updateValues()
         }
@@ -61,7 +68,7 @@ Item {
             Text {
                 id: currentTemp
                 height: currentConditionsSection.height
-                text: weatherData.currenWeather
+                text: weatherData.currentWeather
                 color: Kirigami.Theme.textColor
                 font.pixelSize: height
             }
