@@ -257,6 +257,10 @@ msgid "Search Coordinates"
 msgstr "Buscar Coordenadas"
 
 #: ../contents/ui/WeatherConfig.qml
+msgid "Use Location of your ip"
+msgstr "Usar Coordenadas de la ip"
+
+#: ../contents/ui/WeatherConfig.qml
 msgid "Latitude"
 msgstr "Latitud"
 

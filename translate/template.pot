@@ -256,7 +256,7 @@ msgstr ""
 
 #: ../contents/ui/WeatherConfig.qml
 msgid "Use Location of your ip"
-msgstr "Usar Coordenadas de la ip"
+msgstr ""
 
 #: ../contents/ui/WeatherConfig.qml
 msgid "Latitude"
