@@ -22,7 +22,9 @@
   - UV Index  
   - Sunrise & Sunset Times  
   - "Feels Like" Temperature, Humidity & Wind  
-  - High & Low Temperatures
+  - High & Low Temperatures  
+  - Cloudiness  
+  - Humidity  
 
 - **Clean & Compact Interface**  
   Integrates seamlessly into your KDE Plasma desktop without clutter.
@@ -35,6 +37,15 @@ Designed for **efficiency and clarity**, Freyry provides a complete weather over
 
 ---
 
+## 🛠️ Installation
+  ### KDE Store
+  
+* Right click on the desktop
+* Click on "Add Widgets"
+* Click on "Get New Widgets"
+* Click on "Download New Plasma Widgets"
+* Search for "Freyry Weather"
+* Click on "Install" and you're done!
 
 ## ⚙️ Configuration
 
@@ -52,7 +63,6 @@ Right-click the plasmoid and select **"Configure Freyry..."** to customize:
 ![Screenshot 2](https://raw.githubusercontent.com/zayronxio/Freyry.Weather/refs/heads/main/previews/03.webp) 
 ![Screenshot 3](https://raw.githubusercontent.com/zayronxio/Freyry.Weather/refs/heads/main/previews/01.webp) 
 
-> Include clear screenshots showing the interface and features.
 
 ---
 
@@ -77,4 +87,4 @@ Feel free to **fork the repository** and submit a **pull request**.
 ---
 
 Made with ❤️ for KDE Plasma users.
-# Freyry.Weather
+
