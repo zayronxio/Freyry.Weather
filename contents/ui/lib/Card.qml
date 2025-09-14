@@ -16,6 +16,8 @@ Item {
         isShadow: false
         width: parent.width
         height:  parent.height
+        isCustom: false
+        customColorbg: Kirigami.Theme.backgroundColor
         visible: true
     }
 
@@ -24,12 +26,14 @@ Item {
         isShadow: true
         width: parent.width
         height:  parent.height
+        isCustom: false
         visible: true
         opacity: 0.8
     }
     HelperCard {
         id: mask
         isMask: true
+        isCustom: false
         height:  parent.height
         width: parent.width
         visible: false

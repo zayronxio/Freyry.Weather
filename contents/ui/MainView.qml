@@ -189,7 +189,7 @@ Item {
                             width: parent.width
                             horizontalAlignment: Text.AlignHCenter
                             text: valuesMainView[modelData] ? valuesMainView[modelData]  : "--"
-                            font.weight: Font.DemiBold
+                            //font.weight: Font.DemiBold
                             opacity: 0.7
                             level: 5
                         }
