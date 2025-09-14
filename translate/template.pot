@@ -200,4 +200,73 @@ msgstr ""
 
 #: ../contents/ui/MainView.qml
 msgid "Cloud Cover"
-msgstr "
+msgstr ""
+
+#: ../contents/ui/ConfigGeneral.qml
+msgid "Font Panel Size:"
+msgstr ""
+
+#: ../contents/ui/ConfigGeneral.qml
+msgid "Only Icon Weather"
+msgstr ""
+
+#: ../contents/ui/ConfigGeneral.qml
+msgid "Show temperature weather"
+msgstr ""
+
+#: ../contents/ui/ConfigGeneral.qml
+msgid "Show weather conditions"
+msgstr ""
+
+#: ../contents/ui/ConfigGeneral.qml
+msgid "Font Bold"
+msgstr ""
+
+#: ../contents/ui/ConfigGeneral.qml
+msgid "12-hour (AM/PM)"
+msgstr ""
+
+#: ../contents/ui/WeatherConfig.qml
+msgid "Wind Unit:"
+msgstr ""
+
+#: ../contents/ui/WeatherConfig.qml
+msgid "Temperature Unit:"
+msgstr ""
+
+#: ../contents/ui/WeatherConfig.qml
+msgid "Weather Metrics"
+msgstr ""
+
+#: ../contents/ui/WeatherConfig.qml
+msgid "Wind Speed"
+msgstr ""
+
+#: ../contents/ui/WeatherConfig.qml
+msgid "Feels Like"
+msgstr ""
+
+#: ../contents/ui/WeatherConfig.qml
+msgid "UV Level"
+msgstr ""
+
+#: ../contents/ui/WeatherConfig.qml
+msgid "Humidity"
+msgstr ""
+
+#: ../contents/ui/WeatherConfig.qml
+msgid "Rain"
+msgstr ""
+
+#: ../contents/ui/WeatherConfig.qml
+msgid "Max/Min"
+msgstr ""
+
+#: ../contents/ui/WeatherConfig.qml
+msgid "Sunrise / Sunset"
+msgstr ""
+
+#: ../contents/ui/WeatherConfig.qml
+msgid "Cloud Cover"
+msgstr ""
+
