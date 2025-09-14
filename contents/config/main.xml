@@ -48,6 +48,15 @@
     <entry name="selectedMetrics" type="StringList">
       <default>Feels Like,UV Level,Max/Min,Rain,Wind Speed,Sunrise / Sunset</default>
     </entry>
+    <entry name="oldLatitude" type="int">
+      <default>0</default>
+    </entry>
+    <entry name="oldLongitude" type="int">
+      <default>0</default>
+    </entry>
+    <entry name="updateRecent" type="bool">
+      <default>false</default>
+    </entry>
   </group>
 
 </kcfg>

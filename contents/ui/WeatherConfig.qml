@@ -17,6 +17,7 @@ Item {
         id: coordinates
         property var latitude
         property var longitude
+        property bool updateRecent
     }
 
     QtObject {
@@ -27,10 +28,12 @@ Item {
     FindCity {
         id: findCity
         onReady: {
+            console.log("se esta ejecutando", findCity.cityPhoton)
+            ubication.textUbication = findCity.cityPhoton
+            coordinates.updateRecent = true
+            console.log(coordinates.updateRecent, "gggggg", ubication.textUbication)
             coordinates.latitude = findCity.selectedLatitude
             coordinates.longitude = findCity.selectedLongitude
-            ubication.textUbication = findCity.cityPhoton
-            console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", findCity.cityPhoton)
         }
     }
 
@@ -44,6 +47,7 @@ Item {
     property alias cfg_latitudeLocalized: coordinates.latitude
     property alias cfg_selectedMetrics: metricsLayout.selectedMetricNames
     property alias cfg_textUbication: ubication.textUbication
+    property alias cfg_updateRecent: coordinates.updateRecent
 
     QtObject {
         id: metricsLayout

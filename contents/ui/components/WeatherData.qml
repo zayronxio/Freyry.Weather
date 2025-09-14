@@ -13,15 +13,15 @@ Item {
   property bool useCoordinatesIp: Plasmoid.configuration.ipLocation
 
   property bool loadingComplete: false
-  property string latitudeC: Plasmoid.configuration.latitudeLocalized
-  property string longitudeC: Plasmoid.configuration.longitudeLocalized
+  property int latitudeC: Plasmoid.configuration.latitudeLocalized
+  property int longitudeC: Plasmoid.configuration.longitudeLocalized
   property string longitudIP
   property string latitudeIP
-  property string oldLongitudIP
-  property string oldLatitudeIP
+  property int oldLongitud: Plasmoid.configuration.oldLongitude
+  property int oldLatitude: Plasmoid.configuration.oldLatitude
   property string fullCoordinates: latitudeIP + longitudIP
-  property string latitude: (useCoordinatesIp) ? latitudeIP : (latitudeC === "0") ? latitudeIP : latitudeC
-  property string longitud: (useCoordinatesIp) ? longitudIP : (longitudeC === "0") ? longitudIP : longitudeC
+  property string latitude: useCoordinatesIp ? latitudeIP : (latitudeC === 0) ? latitudeIP : latitudeC
+  property string longitud: useCoordinatesIp ? longitudIP : (longitudeC === 0) ? longitudIP : longitudeC
 
   property string codeleng: Qt.locale().name
 
@@ -58,6 +58,8 @@ Item {
   property var iconsDailyWather: []
   property bool isUpdate: true//false
   property int retrysCity: 0
+  property bool exeGetApi: false
+  property bool updateRecent: Plasmoid.configuration.updateRecent
   property string city
   property string cityUbication: Plasmoid.configuration.textUbication
 
@@ -185,6 +187,7 @@ Item {
 
         if (currentUvIndexText) {
           dataChanged()
+          exeGetApi = false
         } else {
           retry.start()
         }
@@ -255,10 +258,26 @@ Item {
     }
   }
 
-  function checkCoords() {
-    if (active && !useCoordinatesIp && latitudeC !== "0" && longitudeC !== "0" && loadingComplete) {
+  onUpdateRecentChanged: {
+    console.log(updateRecent)
+  }
+  Timer {
+    id: tim
+    running: false
+    interval: 1300
+    repeat: false
+    onTriggered: {
       city = cityUbication
       getWeatherApi()
+      updateRecent = false
+      console.log("se ejecuto")
+    }
+  }
+  function checkCoords() {
+
+    console.log("intento", updateRecent, cityUbication, latitudeC, longitudeC)
+    if (active && !useCoordinatesIp && latitudeC !== 0 && longitudeC !== 0 && loadingComplete && updateRecent) {
+      tim.start()
     }
   }
 
