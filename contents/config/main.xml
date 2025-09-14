@@ -28,10 +28,10 @@
 
   <group name="Weather">
     <entry name="windUnit" type="string">
-      <default>"km/h"</default>
+      <default>km/h</default>
     </entry>
     <entry name="temperatureUnit" type="string">
-      <default>"Celsius"</default>
+      <default>Celsius</default>
     </entry>
     <entry name="ipLocation" type="bool">
       <default>true</default>

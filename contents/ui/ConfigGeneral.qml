@@ -10,7 +10,7 @@ Item {
 
     QtObject {
         id: sizeFontPanel
-        property var value
+        property int value
     }
 
     property alias cfg_sizeFontPanel: sizeFontPanel.value
@@ -34,7 +34,7 @@ Item {
                 }
             }
             onActivated: sizeFontPanel.value = currentValue
-            Component.onCompleted: currentIndex = indexOfValue(sizeFontPanel.value)
+            Component.onCompleted: currentIndex = (sizeFontPanel.value - 5)
         }
         Item {
             Kirigami.FormData.isSection: true
