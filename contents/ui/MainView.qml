@@ -1,24 +1,26 @@
 import QtQuick
 import org.kde.plasma.plasmoid 2.0
 import org.kde.kirigami as Kirigami
+import "./js/fahrenheitFormatt.js" as FahrenheitFormatt
 
 Item {
 
     property int generalMargin: 4
 
+    property string formatTime: Plasmoid.configuration.UseFormat12hours ? "h:mm ap" : "h:mm"
     property var titles
     property string formattTime: ""
     property var valuesMainView: []
 
     property var listMetrics: [
-    { name: "Feels Like", value: weatherData.apparentTemperature},
+    { name: "Feels Like", value: weatherData.apparentTemperature + "°"},
     { name: "UV Level", value: weatherData.currentUvIndexText },
-    { name: "Humidity", value: weatherData.currentWeather },
+    { name: "Humidity", value: weatherData.currentWeather + "%" },
     { name: "Max/Min", value: weatherData.dailyWeatherMax[0] + `|` + weatherData.dailyWeatherMin[0] },
-    { name: "Rain", value: weatherData.dailyWeatherMax[0] },
-    { name: "Wind Speed", value: weatherData.windSpeed },
+    { name: "Rain", value: weatherData.dailyWeatherMax[0] + "%"},
+    { name: "Wind Speed", value: windUnitsUpdate(weatherData.windSpeed, Plasmoid.configuration.windUnit) + " " + Plasmoid.configuration.windUnit},
     { name: "Sunrise / Sunset", value: sunriseOrSunset() },
-    { name: "Cloud Cover", value: weatherData.cloudCover}
+    { name: "Cloud Cover", value: weatherData.cloudCover + "%"}
     ]
 
     function updateValues() {
@@ -35,10 +37,21 @@ Item {
 
     function sunriseOrSunset() {
         if (weatherData.hourlyIsDay[0] === 1) {
-            return Qt.formatDateTime(weatherData.hourlyTimes[weatherData.hourlyIsDay.indexOf(0)], "h ap");
+            return Qt.formatDateTime(weatherData.hourlyTimes[weatherData.hourlyIsDay.indexOf(0)], formatTime);
         } else {
-            return Qt.formatDateTime(weatherData.hourlyTimes[weatherData.hourlyIsDay.indexOf(1)], "h ap");
+            return Qt.formatDateTime(weatherData.hourlyTimes[weatherData.hourlyIsDay.indexOf(1)], formatTime);
         }
+    }
+
+    function windUnitsUpdate(kmh, x) {
+        const metresPerSecond = kmh * (5 / 18);
+        const milesPerHour = kmh * 0.621371;
+
+        return x === "m/s"
+        ? metresPerSecond
+        : x === "mph"
+        ? milesPerHour
+        : kmh; // valor por defecto en km/h
     }
 
     Connections {
@@ -78,7 +91,7 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: currentTemp.implicitWidth + 4
                 anchors.bottom: maxMin.top
-                text: "°C"
+                text: temperatureUnit === "Celsius" ? "°C" : "°F"
                 color: Kirigami.Theme.textColor
                 verticalAlignment: Text.AlignVCenter
                 height: 64 - maxMin.height -4
@@ -128,7 +141,7 @@ Item {
 
                         Kirigami.Heading {
                             width: parent.width
-                            text: i18n(titles[modelData])
+                            text: titles[modelData] === "Sunrise / Sunset" ? weatherData.hourlyTimes[0] === 1 ? i18n("Sunset") : i18n("Sunrise") : i18n(titles[modelData])
                             horizontalAlignment: Text.AlignHCenter
                             font.weight: Font.DemiBold
                             level: 5
@@ -137,7 +150,7 @@ Item {
                         Kirigami.Heading {
                             width: parent.width
                             horizontalAlignment: Text.AlignHCenter
-                            text: valuesMainView[modelData] ? valuesMainView[modelData] : "--"
+                            text: valuesMainView[modelData] ? valuesMainView[modelData]  : "--"
                             font.weight: Font.DemiBold
                             opacity: 0.7
                             level: 5

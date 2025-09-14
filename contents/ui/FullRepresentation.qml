@@ -3,6 +3,7 @@
  *  SPDX-License-Identifier: GPL-3.0-or-later
  */
 import QtQuick
+import QtQuick.Layouts 1.15
 import org.kde.plasma.plasmoid 2.0
 import org.kde.kirigami as Kirigami
 
@@ -10,11 +11,16 @@ Item {
     id: main
 
     property int sectionWidth: 350
-    property int sectionHeight: 100
+    property int sectionHeight: 170
     property bool widgetExpanded: root.expanded
 
-    width: sectionWidth + Kirigami.Units.gridUnit
-    height: sectionHeight + Kirigami.Units.gridUnit
+    Layout.preferredWidth: sectionWidth + Kirigami.Units.gridUnit
+    Layout.preferredHeight: sectionHeight + Kirigami.Units.gridUnit
+    clip: false
+    Layout.minimumWidth: sectionWidth + Kirigami.Units.gridUnit
+    Layout.minimumHeight: sectionHeight + Kirigami.Units.gridUnit
+    Layout.maximumWidth: minimumWidth
+    Layout.maximumHeight: minimumHeight
 
     property var sections: [mainWeatherView, hourlyForecastView, dailyForecastView]
     property int currentIndex: 0

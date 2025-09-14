@@ -1,19 +1,9 @@
 import QtQuick
-import QtQuick.Layouts 1.1
-import org.kde.plasma.plasmoid
-import org.kde.plasma.core 2.0 as PlasmaCore
-import "components" as Components
-import org.kde.kirigami as Kirigami
-import org.kde.ksvg as KSvg
-
-import QtQuick
 import QtQuick.Controls
+import QtQuick.Layouts 1.15
 import "components" as Components
-import QtQuick.Layouts 1.1
-import org.kde.kirigami as Kirigami
 import org.kde.plasma.plasmoid
 import org.kde.plasma.core as PlasmaCore
-import org.kde.plasma.plasma5support as Plasma5Support
 
 PlasmoidItem {
     id: root
@@ -29,19 +19,15 @@ PlasmoidItem {
     property string temperatureUnit: Plasmoid.configuration.temperatureUnit
     property string sizeFontConfg: Plasmoid.configuration.sizeFontPanel
 
-    DayOfWeekRow {
-        id: daysWeek
-        visible:  false
-        delegate: Item {
-            Component.onCompleted: {
-                days.push(shortName)
-            }
-        }
-    }
-
     compactRepresentation: CompactRepresentation {
 
     }
     fullRepresentation: FullRepresentation {
+        width: sectionWidth + Kirigami.Units.gridUnit
+        height: sectionHeight + Kirigami.Units.gridUnit
+        Layout.minimumWidth: sectionWidth + Kirigami.Units.gridUnit
+        Layout.minimumHeight: sectionHeight + Kirigami.Units.gridUnit
+        Layout.maximumWidth: minimumWidth
+        Layout.maximumHeight: minimumHeight
     }
 }
