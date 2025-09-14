@@ -1,8 +1,8 @@
-# ✨ Lluvia de Ideas – KDE Plasma Weather Plasmoid ✨
+# ✨ Freyry – KDE Plasma Weather Plasmoid ✨
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE) [![KDE Plasma](https://img.shields.io/badge/Plasma-6.4+-purple)](https://kde.org/plasma-desktop/)
+[![License: GPL](https://img.shields.io/badge/License-GNU%20GPL-blue)](LICENSE) [![KDE Plasma](https://img.shields.io/badge/Plasma-6.4+-purple)](https://kde.org/plasma-desktop/)
 
-**Lluvia de Ideas** is an elegant, compact, and feature-rich plasmoid for **KDE Plasma** that keeps you updated on the weather at all times. Built with simplicity and power in mind, it leverages the **Open-Meteo API** to provide weather data instantly, **without requiring an API key**.
+**Freyry** is an elegant, compact, and feature-rich plasmoid for **KDE Plasma** that keeps you updated on the weather at all times. Built with simplicity and power in mind, it leverages the **Open-Meteo API** to provide weather data instantly, **without requiring an API key**.
 
 ---
 
@@ -29,16 +29,16 @@
 
 ---
 
-## 💡 Why Lluvia de Ideas?
+## 💡 Why Freyry?
 
-Designed for **efficiency and clarity**, Lluvia de Ideas provides a complete weather overview in a minimal space. It’s intuitive for both casual users and weather enthusiasts.
+Designed for **efficiency and clarity**, Freyry provides a complete weather overview in a minimal space. It’s intuitive for both casual users and weather enthusiasts.
 
 ---
 
 
 ## ⚙️ Configuration
 
-Right-click the plasmoid and select **"Configure Lluvia de Ideas..."** to customize:
+Right-click the plasmoid and select **"Configure Freyry..."** to customize:
 
 - Switch between **automatic** or **manual** location.  
 - Enter your preferred **city name** or **coordinates**.  
@@ -48,8 +48,9 @@ Right-click the plasmoid and select **"Configure Lluvia de Ideas..."** to custom
 
 ## 📸 Screenshots
 
-![Screenshot 1](screenshots/screenshot1.png)  
-![Screenshot 2](screenshots/screenshot2.png)  
+![Screenshot 1](https://raw.githubusercontent.com/zayronxio/Freyry.Weather/refs/heads/main/previews/04.webp)  
+![Screenshot 2](https://raw.githubusercontent.com/zayronxio/Freyry.Weather/refs/heads/main/previews/03.webp) 
+![Screenshot 3](https://raw.githubusercontent.com/zayronxio/Freyry.Weather/refs/heads/main/previews/01.webp) 
 
 > Include clear screenshots showing the interface and features.
 
@@ -57,7 +58,7 @@ Right-click the plasmoid and select **"Configure Lluvia de Ideas..."** to custom
 
 ## 📄 License
 
-This project is licensed under the **MIT License** – see the [LICENSE](LICENSE) file for details.
+This project is licensed under the **GPL 3.0 License** – see the [LICENSE](LICENSE) file for details.
 
 ---
 
