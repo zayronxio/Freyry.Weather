@@ -2,9 +2,10 @@ import QtQuick
 import QtQuick.Layouts 1.15
 import QtQuick.Controls
 import org.kde.plasma.plasmoid
+import "components" as Components
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.core as PlasmaCore
-import "components" as Components
+import "./js/fahrenheitFormatt.js" as FahrenheitFormatt
 
 Item {
     id: iconAndTem

@@ -1,8 +1,8 @@
 import QtQuick
 import QtQuick.Controls
 import "../js/utilities.js" as Utils
+import org.kde.plasma.plasmoid
 import "../js/getAPIs.js" as GetApis
-
 
 Item {
   id: root
@@ -10,9 +10,11 @@ Item {
   signal dataChanged
 
   property bool active: true //plasmoid.configuration.weatheCardActive
-  property bool useCoordinatesIp: true // plasmoid.configuration.coordinatesIP
-  property string latitudeC: plasmoid.configuration.manualLatitude
-  property string longitudeC: plasmoid.configuration.manualLongitude
+  property bool useCoordinatesIp: Plasmoid.configuration.ipLocation
+
+  property bool loadingComplete: false
+  property string latitudeC: Plasmoid.configuration.latitudeLocalized
+  property string longitudeC: Plasmoid.configuration.longitudeLocalized
   property string longitudIP
   property string latitudeIP
   property string oldLongitudIP
@@ -23,7 +25,7 @@ Item {
 
   property string codeleng: Qt.locale().name
 
-  property var observerCoordenates: latitude + longitud
+  property var observerCoordenates: latitudeC + longitudeC
 
   property bool updateWeather: false
   //property int indexTime
@@ -44,7 +46,7 @@ Item {
   property var hourlyWeatherCodes: []
   property var hourlyPrecipitationProbability: []
   property var hourlyUvIndex: []
-  property var hourlyIsDay: []
+  property var hourlyIsDay: [] //1 is day, 0 is Night
   property var iconsHourlyWeather: []
 
   property var dailyTime: []
@@ -57,9 +59,13 @@ Item {
   property bool isUpdate: true//false
   property int retrysCity: 0
   property string city
-  //readonly property string prefixIcon: determinateDay.isday ? "" : "-night"
+  property string cityUbication: Plasmoid.configuration.textUbication
+
+  onLatitudeCChanged: checkCoords()
+  onLongitudeCChanged: checkCoords()
 
   Component.onCompleted: {
+    loadingComplete = true
     starComponent()
   }
 
@@ -71,11 +77,13 @@ Item {
     if (useCoordinatesIp) {
       getCoordinatesWithIp()
     } else {
-      if (latitudeC === "0" && longitudC === "0") {
-        getCoordinatesWithIp()
-      } else {
+      if (latitudeC !== 0 && longitudeC !== 0) {
         getWeatherApi()
-        getCityFuncion()
+        if (cityUbication !== null || cityUbication !== "") {
+          city = cityUbication
+        } else {
+          getCityFuncion()
+        }
       }
     }
   }
@@ -138,8 +146,6 @@ Item {
         iconsDailyWather= []
 
         updateWeather = !(result.current.weather_code === null)
-
-        //indexTime = 0
 
         currenWeatherCode = result.current.weather_code
         currentHumidity = result.current.relative_humidity_2m
@@ -242,8 +248,19 @@ Item {
 
   onUseCoordinatesIpChanged: {
     if (active) {
+      if (useCoordinatesIp) {
+        city = null
+        getCoordinatesWithIp()
+      }
+    }
+  }
+
+  function checkCoords() {
+    if (active && !useCoordinatesIp && latitudeC !== "0" && longitudeC !== "0" && loadingComplete) {
+      city = cityUbication
       getWeatherApi()
     }
   }
+
 }
 

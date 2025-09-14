@@ -11,6 +11,8 @@ Kirigami.Dialog {
     property double selectedLatitude: 0
     property double selectedLongitude: 0
 
+    property string cityPhoton
+
     signal ready
 
     ColumnLayout {
@@ -45,6 +47,7 @@ Kirigami.Dialog {
                 onClicked: {
                     dialog.selectedLatitude = parseFloat(lat)
                     dialog.selectedLongitude = parseFloat(lon)
+                    dialog.cityPhoton = ubication
                     ready()
                     dialog.close()
                 }
@@ -66,11 +69,14 @@ Kirigami.Dialog {
                     for (var i = 0; i < data.features.length; i++) {
                         var feature = data.features[i]
                         var city = feature.properties.city || ""
+                        var textUbication = feature.properties.city || feature.properties.county || feature.properties.state || feature.properties.name
+                        console.log(textUbication)
                         var country = feature.properties.country || ""
                         resultsModel.append({
                             display_name: feature.properties.name + (city ? ", " + city : "") + (country ? ", " + country : ""),
                                             lat: feature.geometry.coordinates[1],
-                                            lon: feature.geometry.coordinates[0]
+                                            lon: feature.geometry.coordinates[0],
+                                            ubication: textUbication
                         })
                     }
 

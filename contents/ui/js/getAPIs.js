@@ -17,6 +17,11 @@ function obtenerDatosClimaticos(latitud, longitud, callback) {
         }
     };
 
+    req.onerror = function () {
+        console.error("Error de la red.");
+        callback(null); // Devolver null en caso de error de red
+    };
+
     req.send();
 }
 
