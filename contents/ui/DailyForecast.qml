@@ -59,6 +59,7 @@ Item {
                                 width: parent.width
                                 anchors.top: max.bottom
                                 anchors.topMargin: spacing
+                                opacity: 0.6
                                 horizontalAlignment: Text.AlignHCenter
                                 text: weatherMinDaysForecast[modelData +  1] === undefined ? "--" : weatherMinDaysForecast[modelData +  1] + "°"
                                 level: 5
@@ -76,7 +77,7 @@ Item {
                     }
                     Rectangle {
                         anchors.right: parent.right
-                        anchors.rightMargin: -parent.parent.spacing / 2  // Esto no es exacto, porque el spacing es entre items, y el rectángulo está dentro del item.
+                        anchors.rightMargin: -parent.parent.spacing / 2
                         width: 1
                         height: parent.height * 0.4
                         anchors.verticalCenter: parent.verticalCenter
