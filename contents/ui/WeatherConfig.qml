@@ -19,11 +19,18 @@ Item {
         property var longitude
     }
 
+    QtObject {
+        id: ubication
+        property string textUbication
+    }
+
     FindCity {
         id: findCity
         onReady: {
             coordinates.latitude = findCity.selectedLatitude
             coordinates.longitude = findCity.selectedLongitude
+            ubication.textUbication = findCity.cityPhoton
+            console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", findCity.cityPhoton)
         }
     }
 
@@ -36,6 +43,7 @@ Item {
     property alias cfg_longitudeLocalized: coordinates.longitude
     property alias cfg_latitudeLocalized: coordinates.latitude
     property alias cfg_selectedMetrics: metricsLayout.selectedMetricNames
+    property alias cfg_textUbication: ubication.textUbication
 
     QtObject {
         id: metricsLayout
@@ -82,92 +90,106 @@ Item {
         console.log("Selected metrics:", metricsLayout.selectedMetricNames)
     }
 
-    Kirigami.FormLayout {
-        width: root.width
+    ScrollView {
+        id: scrollView
+        anchors.fill: parent
+        clip: true // asegura que el contenido no se salga
 
-        CheckBox {
-            id: ipLocation
-            Kirigami.FormData.label: i18n("Use Location of your ip")
-        }
+        Kirigami.FormLayout {
+            width: scrollView.width
+            //spacing: Kirigami.Units.smallSpacing
 
-        Item { Kirigami.FormData.isSection: true }
-
-        Button {
-            text: i18n("Search Coordinates")
-            enabled: !ipLocation.checked
-            onClicked: findCity.open()
-        }
-
-        TextField {
-            Kirigami.FormData.label: i18n("Latitude")
-            text: findCity.selectedLatitude === undefined ? "unknown" : findCity.selectedLatitude
-            enabled: false
-            visible: !ipLocation.checked
-        }
-
-        TextField {
-            Kirigami.FormData.label: i18n("Longitude")
-            text: findCity.selectedLongitude === undefined ? "unknown" : findCity.selectedLongitude
-            enabled: false
-            visible: !ipLocation.checked
-        }
-
-        Item { Kirigami.FormData.isSection: true }
-
-        ComboBox {
-            id: windUnitBox
-            Kirigami.FormData.label: i18n("Wind Unit:")
-            model: windUnits
-            onActivated: units.wind = currentValue
-            Component.onCompleted: {
-                var idx = windUnits.indexOf(units.wind)
-                currentIndex = idx >= 0 ? idx : 0
-            }
-        }
-
-        ComboBox {
-            id: unitsBox
-            Kirigami.FormData.label: i18n("Temperature Unit:")
-            model: temperatureUnits
-            onActivated: units.temperatureUnit = currentValue
-            Component.onCompleted: {
-                var idx = temperatureUnits.indexOf(units.temperatureUnit)
-                currentIndex = idx >= 0 ? idx : 0
-            }
-        }
-
-        Item { Kirigami.FormData.isSection: true }
-        Item { Kirigami.FormData.isSection: true }
-
-        Kirigami.Heading {
-            width: parent.width
-            font.weight: Font.DemiBold
-            text: i18n("Weather Metrics")
-            anchors.horizontalCenter: parent.horizontalCenter
-            color: Kirigami.Theme.textColor
-            level: 4
-        }
-
-        Repeater {
-            model: allMetrics
             CheckBox {
-                checked: model.selected
-                Kirigami.FormData.label: i18n(model.name)
-                onClicked: {
+                id: ipLocation
+                Kirigami.FormData.label: i18n("Use Location of your ip")
+                onCheckedChanged: {
                     if (checked) {
-                        if (metricsLayout.currentSelected < metricsLayout.maxSelected) {
-                            metricsLayout.currentSelected++
-                            allMetrics.setProperty(index, "selected", true)
-                        } else {
-                            checked = false
-                        }
-                    } else {
-                        metricsLayout.currentSelected--
-                        allMetrics.setProperty(index, "selected", false)
+                        coordinates.latitude = 0
+                        coordinates.longitude = 0
                     }
-                    metricsUpdated()
+                }
+            }
+
+            Item { Kirigami.FormData.isSection: true }
+
+            Button {
+                text: i18n("Search Coordinates")
+                enabled: !ipLocation.checked
+                onClicked: findCity.open()
+            }
+
+            TextField {
+                Kirigami.FormData.label: i18n("Latitude")
+                text: coordinates.latitude === 0 ? "unknown" : coordinates.latitude
+                enabled: false
+                visible: !ipLocation.checked
+            }
+
+            TextField {
+                Kirigami.FormData.label: i18n("Longitude")
+                text: coordinates.longitude === 0 ? "unknown" : coordinates.longitude
+                enabled: false
+                visible: !ipLocation.checked
+            }
+
+            Item { Kirigami.FormData.isSection: true }
+
+            ComboBox {
+                id: windUnitBox
+                Kirigami.FormData.label: i18n("Wind Unit:")
+                model: windUnits
+                onActivated: units.wind = currentValue
+                Component.onCompleted: {
+                    var idx = windUnits.indexOf(units.wind)
+                    currentIndex = idx >= 0 ? idx : 0
+                }
+            }
+
+            ComboBox {
+                id: unitsBox
+                Kirigami.FormData.label: i18n("Temperature Unit:")
+                model: temperatureUnits
+                onActivated: units.temperatureUnit = currentValue
+                Component.onCompleted: {
+                    var idx = temperatureUnits.indexOf(units.temperatureUnit)
+                    currentIndex = idx >= 0 ? idx : 0
+                }
+            }
+
+            Item { Kirigami.FormData.isSection: true }
+            Item { Kirigami.FormData.isSection: true }
+
+            Kirigami.Heading {
+                width: parent.width
+                font.weight: Font.DemiBold
+                text: i18n("Weather Metrics")
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: Kirigami.Theme.textColor
+                level: 4
+            }
+
+            Repeater {
+                model: allMetrics
+                CheckBox {
+                    checked: model.selected
+                    Kirigami.FormData.label: i18n(model.name)
+                    onClicked: {
+                        if (checked) {
+                            if (metricsLayout.currentSelected < metricsLayout.maxSelected) {
+                                metricsLayout.currentSelected++
+                                allMetrics.setProperty(index, "selected", true)
+                            } else {
+                                checked = false
+                            }
+                        } else {
+                            metricsLayout.currentSelected--
+                            allMetrics.setProperty(index, "selected", false)
+                        }
+                        metricsUpdated()
+                    }
                 }
             }
         }
     }
+
 }
