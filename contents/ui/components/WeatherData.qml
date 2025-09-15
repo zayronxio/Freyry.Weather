@@ -13,15 +13,15 @@ Item {
   property bool useCoordinatesIp: Plasmoid.configuration.ipLocation
 
   property bool loadingComplete: false
-  property int latitudeC: Plasmoid.configuration.latitudeLocalized
-  property int longitudeC: Plasmoid.configuration.longitudeLocalized
+  property int latitudeC: parseFloat(Plasmoid.configuration.latitudeLocalized)
+  property int longitudeC: parseFloat(Plasmoid.configuration.longitudeLocalized)
   property string longitudIP
   property string latitudeIP
   property int oldLongitud: Plasmoid.configuration.oldLongitude
   property int oldLatitude: Plasmoid.configuration.oldLatitude
   property string fullCoordinates: latitudeIP + longitudIP
-  property string latitude: useCoordinatesIp ? latitudeIP : (latitudeC === 0) ? latitudeIP : latitudeC
-  property string longitud: useCoordinatesIp ? longitudIP : (longitudeC === 0) ? longitudIP : longitudeC
+  property string latitude: useCoordinatesIp ? latitudeIP : (latitudeC === "0") ? latitudeIP : latitudeC
+  property string longitud: useCoordinatesIp ? longitudIP : (longitudeC === "0") ? longitudIP : longitudeC
 
   property string codeleng: Qt.locale().name
 
@@ -276,7 +276,7 @@ Item {
   function checkCoords() {
 
     console.log("intento", updateRecent, cityUbication, latitudeC, longitudeC)
-    if (active && !useCoordinatesIp && latitudeC !== 0 && longitudeC !== 0 && loadingComplete && updateRecent) {
+    if (active && !useCoordinatesIp && latitudeC !== "0" && longitudeC !== "0" && loadingComplete && updateRecent) {
       tim.start()
     }
   }

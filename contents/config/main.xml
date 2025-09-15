@@ -36,10 +36,10 @@
     <entry name="ipLocation" type="bool">
       <default>true</default>
     </entry>
-    <entry name="latitudeLocalized" type="int">
+    <entry name="latitudeLocalized" type="string">
       <default>0</default>
     </entry>
-    <entry name="longitudeLocalized" type="int">
+    <entry name="longitudeLocalized" type="string">
       <default>0</default>
     </entry>
     <entry name="textUbication" type="string">
